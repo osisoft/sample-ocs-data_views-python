@@ -4,7 +4,7 @@
 
 [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-data_views-python?repoName=osisoft%2Fsample-ocs-data_views-python&branchName=master)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2618&repoName=osisoft%2Fsample-ocs-data_views-python&branchName=master)
 
-The sample code in this demonstrates how to invoke the Data View REST API via the sample Python client [library](https://github.com/osisoft/OSI-Samples-OCS/tree/master/library_samples/Python). The sample demonstrates how to establish a connection to SDS, obtain an authorization token, create an SdsType and SdsStream with data (if needed), create a Data View, update it, retrieve it, and retrieve data from it in different ways. At the end of the sample, everything that was created is deleted.
+The sample code in this demonstrates how to invoke the Data View REST API via the sample Python client [library](https://github.com/osisoft/sample-ocs-sample_libraries-python). The sample demonstrates how to establish a connection to SDS, obtain an authorization token, create an SdsType and SdsStream with data (if needed), create a Data View, update it, retrieve it, and retrieve data from it in different ways. At the end of the sample, everything that was created is deleted.
 
 This example uses the ocs_sample_library_preview library which is also included in this github repo. It is downloadable via pip.
 
@@ -32,6 +32,6 @@ or
 
 Automated test uses Python 3.6.8 x64
 
-For the general steps or switch languages see the Task [ReadMe](../)  
-For the main OCS page [ReadMe](https://github.com/osisoft/OSI-Samples-OCS)  
-For the main samples page on master [ReadMe](https://github.com/osisoft/OSI-Samples)
+For the main OCS data views samples page on master [ReadMe](https://github.com/osisoft/OSI-Samples-OCS/blob/master/docs/DATA_VIEWS_README.md)  
+For the main OCS samples page on master [ReadMe](https://github.com/osisoft/OSI-Samples-OCS)  
+For the main OSIsoft samples page on master [ReadMe](https://github.com/osisoft/OSI-Samples)

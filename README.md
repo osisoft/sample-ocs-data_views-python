@@ -1,8 +1,8 @@
 # Using the OCS Data View Service in Python
 
-**Version:** 1.0.2
+**Version:** 1.0.3
 
-[![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-data_views-python?repoName=osisoft%2Fsample-ocs-data_views-python&branchName=master)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2618&repoName=osisoft%2Fsample-ocs-data_views-python&branchName=master)
+[![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-data_views-python?repoName=osisoft%2Fsample-ocs-data_views-python&branchName=main)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2618&repoName=osisoft%2Fsample-ocs-data_views-python&branchName=main)
 
 The sample code in this demonstrates how to invoke the Data View REST API via the sample Python client [library](https://github.com/osisoft/sample-ocs-sample_libraries-python). The sample demonstrates how to establish a connection to SDS, obtain an authorization token, create an SdsType and SdsStream with data (if needed), create a Data View, update it, retrieve it, and retrieve data from it in different ways. At the end of the sample, everything that was created is deleted.
 
@@ -32,6 +32,6 @@ or
 
 Automated test uses Python 3.6.8 x64
 
-For the main OCS data views samples page on master [ReadMe](https://github.com/osisoft/OSI-Samples-OCS/blob/master/docs/DATA_VIEWS_README.md)  
-For the main OCS samples page on master [ReadMe](https://github.com/osisoft/OSI-Samples-OCS)  
-For the main OSIsoft samples page on master [ReadMe](https://github.com/osisoft/OSI-Samples)
+For the main OCS data views samples page [ReadMe](https://github.com/osisoft/OSI-Samples-OCS/blob/main/docs/DATA_VIEWS_README.md)  
+For the main OCS samples page [ReadMe](https://github.com/osisoft/OSI-Samples-OCS)  
+For the main OSIsoft samples page [ReadMe](https://github.com/osisoft/OSI-Samples)

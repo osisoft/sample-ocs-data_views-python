@@ -53,6 +53,7 @@ jobs:
       - script: |
           sudo apt-get update
           sudo apt-get install python3.9 python3-pip
+        displayName: 'Install Python 3.9'
         condition: eq(variables['Agent.OS'], 'Linux')
 
       - script: |
@@ -60,10 +61,15 @@ jobs:
           pip install pytest
           echo Install requirements
           pip install -r requirements.txt
-          echo Run tests
-          python3.9 -m pytest --junitxml=junit/test-results.xml ./test.py
-          echo Complete
-        displayName: 'Run tests'
+        displayName: 'Install dependencies'
+
+      - script: python3.9 -m pytest --junit=junit/test-results.xml ./test.py
+        condition: eq(variables['Agent.OS'], 'Linux')
+        displayName: 'Run tests (Linux)'
+
+      - script: python -m pytest --junit=junit/test-results.xml ./test.py
+        condition: eq(variables['Agent.OS'], 'Windows')
+        displayName: 'Run tests (Windows)'
 
       - task: PublishTestResults@2
         inputs:

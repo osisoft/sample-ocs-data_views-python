@@ -51,6 +51,11 @@ jobs:
           fileLibrary: $(CredFileLibrary)
 
       - script: |
+          sudo apt-get update
+          sudo apt-get install python3.9 python3-pip
+        condition: eq(variables['Agent.OS'], 'Linux')
+
+      - script: |
           echo Install test tools  
           pip install pytest
           echo Install requirements

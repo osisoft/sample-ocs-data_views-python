@@ -102,8 +102,8 @@ def main(test=False):
         # Step 3
         print()
         print('Step 3: Create a data view')
-        dataview = DataView(id=SAMPLE_DATAVIEW_ID, name=SAMPLE_DATAVIEW_NAME,
-                            description=SAMPLE_DATAVIEW_DESCRIPTION)
+        dataview = DataView(SAMPLE_DATAVIEW_ID,
+                            SAMPLE_DATAVIEW_NAME, SAMPLE_DATAVIEW_DESCRIPTION)
         ocs_client.DataViews.postDataView(namespace_id, dataview)
 
         # Step 4
@@ -116,8 +116,8 @@ def main(test=False):
         # Step 5
         print()
         print('Step 5: Add a query for data items')
-        query = Query(id=SAMPLE_QUERY_ID, value=SAMPLE_QUERY_STRING)
-        dataview.Queries.append(query)
+        query = Query(SAMPLE_QUERY_ID, value=SAMPLE_QUERY_STRING)
+        dataview.Queries = [query]
         # No Data View returned, success is 204
         ocs_client.DataViews.putDataView(namespace_id, dataview)
 
@@ -154,8 +154,8 @@ def main(test=False):
 
         print('Retrieving data from the data view:')
         dataview_data = ocs_client.DataViews.getDataInterpolated(
-            namespace_id=namespace_id, dataView_id=SAMPLE_DATAVIEW_ID, startIndex=sample_start_time,
-            endIndex=sample_end_time, interval=SAMPLE_INTERVAL)
+            namespace_id, SAMPLE_DATAVIEW_ID, start_index=sample_start_time,
+            end_index=sample_end_time, interval=SAMPLE_INTERVAL)
         print(str(dataview_data))
         print(len(dataview_data))
         assert len(dataview_data) > 0, 'Error getting data view data'
@@ -165,14 +165,14 @@ def main(test=False):
         print('Step 9: Group the data view')
         grouping = Field(source=FieldSource.Id,
                          label='{DistinguisherValue} {FirstKey}')
-        dataview.GroupingFields.append(grouping)
+        dataview.GroupingFields = [grouping]
         # No DataView returned, success is 204
         ocs_client.DataViews.putDataView(namespace_id, dataview)
 
         print('Retrieving data from the data view:')
         dataview_data = ocs_client.DataViews.getDataInterpolated(
-            namespace_id=namespace_id, dataView_id=SAMPLE_DATAVIEW_ID, startIndex=sample_start_time,
-            endIndex=sample_end_time, interval=SAMPLE_INTERVAL)
+            namespace_id, SAMPLE_DATAVIEW_ID, start_index=sample_start_time,
+            end_index=sample_end_time, interval=SAMPLE_INTERVAL)
         print(str(dataview_data))
         assert len(dataview_data) > 0, 'Error getting data view data'
 
@@ -188,8 +188,8 @@ def main(test=False):
 
         print('Retrieving data from the data view:')
         dataview_data = ocs_client.DataViews.getDataInterpolated(
-            namespace_id=namespace_id, dataView_id=SAMPLE_DATAVIEW_ID, startIndex=sample_start_time,
-            endIndex=sample_end_time, interval=SAMPLE_INTERVAL)
+            namespace_id, SAMPLE_DATAVIEW_ID, start_index=sample_start_time,
+            end_index=sample_end_time, interval=SAMPLE_INTERVAL)
         print(str(dataview_data))
         assert len(dataview_data) > 0, 'Error getting data view data'
 
@@ -209,8 +209,8 @@ def main(test=False):
 
         print('Retrieving data from the data view:')
         dataview_data = ocs_client.DataViews.getDataInterpolated(
-            namespace_id=namespace_id, dataView_id=SAMPLE_DATAVIEW_ID, startIndex=sample_start_time,
-            endIndex=sample_end_time, interval=SAMPLE_INTERVAL)
+            namespace_id, SAMPLE_DATAVIEW_ID, start_index=sample_start_time,
+            end_index=sample_end_time, interval=SAMPLE_INTERVAL)
         print(str(dataview_data))
         assert len(dataview_data) > 0, 'Error getting data view data'
 
@@ -264,50 +264,46 @@ def main(test=False):
     print('Complete!')
 
 
-def create_data(namespace_id, ocs_client):
+def create_data(namespace_id, ocs_client: OCSClient):
     """Creates sample data for the script to use"""
 
-    double_type = SdsType(id='doubleType', sdsTypeCode=SdsTypeCode.Double)
-    datetime_type = SdsType(
-        id='dateTimeType', sdsTypeCode=SdsTypeCode.DateTime)
+    double_type = SdsType('doubleType', SdsTypeCode.Double)
+    datetime_type = SdsType('dateTimeType', SdsTypeCode.DateTime)
 
-    pressure_property = SdsTypeProperty(id='pressure', sdsType=double_type)
-    temperature_property = SdsTypeProperty(id=SAMPLE_FIELD_TO_CONSOLIDATE_TO,
-                                           sdsType=double_type)
-    ambient_temperature_property = SdsTypeProperty(id=SAMPLE_FIELD_TO_CONSOLIDATE,
-                                                   sdsType=double_type)
-    time_property = SdsTypeProperty(id='time', sdsType=datetime_type,
-                                    isKey=True)
+    pressure_property = SdsTypeProperty('pressure', sds_type=double_type)
+    temperature_property = SdsTypeProperty(SAMPLE_FIELD_TO_CONSOLIDATE_TO,
+                                           sds_type=double_type)
+    ambient_temperature_property = SdsTypeProperty(SAMPLE_FIELD_TO_CONSOLIDATE,
+                                                   sds_type=double_type)
+    time_property = SdsTypeProperty('time', True, datetime_type)
 
     sds_type_1 = SdsType(
-        id=SAMPLE_TYPE_ID_1,
+        SAMPLE_TYPE_ID_1, SdsTypeCode.Object, [
+            pressure_property, temperature_property, time_property],
         description='This is a sample Sds type for storing Pressure type '
-                    'events for Data Views',
-        sdsTypeCode=SdsTypeCode.Object,
-        properties=[pressure_property, temperature_property, time_property])
+                    'events for Data Views')
 
     sds_type_2 = SdsType(
-        id=SAMPLE_TYPE_ID_2,
+        SAMPLE_TYPE_ID_2, SdsTypeCode.Object, [
+            pressure_property, ambient_temperature_property, time_property],
         description='This is a new sample Sds type for storing Pressure type '
-                    'events for Data Views',
-        sdsTypeCode=SdsTypeCode.Object,
-        properties=[pressure_property, ambient_temperature_property, time_property])
+                    'events for Data Views')
 
     print('Creating SDS Types...')
     ocs_client.Types.getOrCreateType(namespace_id, sds_type_1)
     ocs_client.Types.getOrCreateType(namespace_id, sds_type_2)
 
     stream1 = SdsStream(
-        id=SAMPLE_STREAM_ID_1,
-        name=SAMPLE_STREAM_NAME_1,
-        description='A Stream to store the sample Pressure events',
-        typeId=SAMPLE_TYPE_ID_1)
+        SAMPLE_STREAM_ID_1,
+        SAMPLE_TYPE_ID_1,
+        SAMPLE_STREAM_NAME_1,
+        'A Stream to store the sample Pressure events')
 
     stream2 = SdsStream(
-        id=SAMPLE_STREAM_ID_2,
-        name=SAMPLE_STREAM_NAME_2,
-        description='A Stream to store the sample Pressure events',
-        typeId=SAMPLE_TYPE_ID_2)
+        SAMPLE_STREAM_ID_2,
+        SAMPLE_TYPE_ID_2,
+        SAMPLE_STREAM_NAME_2,
+        'A Stream to store the sample Pressure events')
 
     print('Creating SDS Streams...')
     ocs_client.Streams.createOrUpdateStream(namespace_id, stream1)

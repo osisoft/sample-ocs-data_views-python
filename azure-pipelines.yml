@@ -53,6 +53,7 @@ jobs:
       - script: |
           sudo apt-get update
           sudo apt-get install python3.9 python3-pip
+          sudo update-alternatives --install /usr/bin/python python /usr/bin/python3.9 2
         displayName: 'Install Python 3.9'
         condition: eq(variables['Agent.OS'], 'Linux')
 
@@ -63,7 +64,7 @@ jobs:
           pip install -r requirements.txt
         displayName: 'Install dependencies'
 
-      - script: python3.9 -m pytest --junit=junit/test-results.xml ./test.py
+      - script: python -m pytest --junit=junit/test-results.xml ./test.py
         condition: eq(variables['Agent.OS'], 'Linux')
         displayName: 'Run tests (Linux)'
 

@@ -59,6 +59,8 @@ jobs:
         condition: eq(variables['Agent.OS'], 'Linux')
 
       - script: |
+          python --version
+          pip --version
           echo Install test tools  
           pip install pytest
           echo Install requirements

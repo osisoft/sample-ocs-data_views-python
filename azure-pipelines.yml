@@ -36,6 +36,7 @@ variables:
 jobs:
   - job: Tests
     strategy:
+      maxParallel: 1 # Avoid conflicts in OCS
       matrix:
         linux:
           agentOS: Linux
@@ -62,7 +63,7 @@ jobs:
           echo Run tests
           python -m pytest --junit-xml=junit/test-results.xml ./test.py
           echo Complete
-        displayName: 'Install dependencies'
+        displayName: 'Run tests'
 
       - task: PublishTestResults@2
         inputs:

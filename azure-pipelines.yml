@@ -60,7 +60,7 @@ jobs:
           echo Install requirements
           python -m pip install -r requirements.txt
           echo Run tests
-          python -m pytest --junit=junit/test-results.xml ./test.py
+          python -m pytest --junit-xml=junit/test-results.xml ./test.py
           echo Complete
         displayName: 'Install dependencies'
 

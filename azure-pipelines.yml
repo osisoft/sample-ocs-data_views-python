@@ -51,29 +51,14 @@ jobs:
           fileLibrary: $(CredFileLibrary)
 
       - script: |
-          sudo apt-get update
-          sudo apt-get install python3.9 python3-pip
-          sudo update-alternatives --install /usr/bin/python python /usr/bin/python3.9 2
-          sudo update-alternatives --install /usr/bin/pip pip /usr/bin/pip3.9 2
-        displayName: 'Install Python 3.9'
-        condition: eq(variables['Agent.OS'], 'Linux')
-
-      - script: |
-          python --version
-          pip --version
           echo Install test tools  
-          pip install pytest
+          python3.9 -m pip install pytest
           echo Install requirements
-          pip install -r requirements.txt
+          python3.9 -m pip install -r requirements.txt
+          echo Run tests
+          python3.9 -m pytest --junit=junit/test-results.xml ./test.py
+          echo Complete
         displayName: 'Install dependencies'
-
-      - script: python -m pytest --junit=junit/test-results.xml ./test.py
-        condition: eq(variables['Agent.OS'], 'Linux')
-        displayName: 'Run tests (Linux)'
-
-      - script: python -m pytest --junit=junit/test-results.xml ./test.py
-        condition: eq(variables['Agent.OS'], 'Windows')
-        displayName: 'Run tests (Windows)'
 
       - task: PublishTestResults@2
         inputs:

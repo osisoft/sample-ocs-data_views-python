@@ -1,5 +1,9 @@
 # Version History
 
+## 1.0.4 / 2021-05-03
+
+- Updated sample to use ocs_sample_library_preview 0.2.0_preview
+
 ## 1.0.3 / 2021-03-24
 
 - Updated pipeline to use internal agent pool
